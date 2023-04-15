@@ -1,0 +1,550 @@
+--[[
+
+      _____  _    _  ______  _____  _  __  _____ __     __ _____  _______  ______  __  __ 
+     / ____|| |  | ||  ____|/ ____|| |/ / / ____|\ \   / // ____||__   __||  ____||  \/  |
+    | |     | |__| || |__  | |     | ' / | (___   \ \_/ /| (___     | |   | |__   | \  / |
+    | |     |  __  ||  __| | |     |  <   \___ \   \   /  \___ \    | |   |  __|  | |\/| |
+    | |____ | |  | || |____| |____ | . \  ____) |   | |   ____) |   | |   | |____ | |  | |
+     \_____||_|  |_||______|\_____||_|\_\|_____/    |_|  |_____/    |_|   |______||_|  |_|
+                                                                                        
+                                                                                       
+    Features:
+    - Compatible All Stand Versions if deprecated versions too.
+
+    Help with Lua?
+    - GTAV Natives: https://nativedb.dotindustries.dev/natives/
+    - FiveM Docs Natives: https://docs.fivem.net/natives/
+    - Stand Lua Documentation: https://stand.gg/help/lua-api-documentation
+    - Lua Documentation: https://www.lua.org/docs.html                                                                                       
+
+]]--
+
+    util.keep_running()
+    util.require_natives(1663599433)
+
+    local VRS = "0.1"
+    local CheckSystem = "> CheckSystem "..VRS
+    local root = menu.my_root()
+
+    root:divider("CheckSystem "..VRS)
+    local KickSystem = root:list("Kick Options")
+    local CrashSystem = root:list("Crash Options")
+
+    CheckSession =  function() return util.is_session_started() and not util.is_session_transition_active() end
+
+    ----======================================----
+    ---             Kick Options
+    ---      Kick pests until you're safe
+    ----======================================----
+
+        KickSystem:toggle_loop("Auto Kick French", {"akickfrench"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 1 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("breakup" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        KickSystem:toggle_loop("Auto Kick German", {"akickgerman"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 2 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("breakup" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        KickSystem:toggle_loop("Auto Kick Italian", {"akickitalian"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 3 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("breakup" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        KickSystem:toggle_loop("Auto Kick Spanish", {"akickspanish"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 4 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("breakup" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        KickSystem:toggle_loop("Auto Kick Portuguese", {"akickportuguese"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 5 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("breakup" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        KickSystem:toggle_loop("Auto Kick Polish", {"akickpolish"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 6 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("breakup" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        KickSystem:toggle_loop("Auto Kick Russian", {"akickrussian"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 7 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("breakup" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        KickSystem:toggle_loop("Auto Kick Korean", {"akickkorean"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 8 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("breakup" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        KickSystem:toggle_loop("Auto Kick Chinese (Taiwan)", {"akicktaiwan"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 9 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("breakup" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        KickSystem:toggle_loop("Auto Kick Japanese", {"akickjapan"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 10 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("breakup" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        KickSystem:toggle_loop("Auto Kick Mexicans", {"akickmexico"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 11 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("breakup" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        KickSystem:toggle_loop("Auto Kick Chinese (Mainland)", {"akickchina"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 12 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("breakup" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+    ----======================================----
+    ---             Crash Options
+    ---      Crash pests until you're safe
+    ----======================================----
+
+        CrashSystem:toggle_loop("Auto Crash French", {"acrashfrench"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 1 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("crash" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        CrashSystem:toggle_loop("Auto Crash German", {"acrashgerman"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 2 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("crash" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        CrashSystem:toggle_loop("Auto Crash Italian", {"acrashitalian"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 3 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("crash" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        CrashSystem:toggle_loop("Auto Crash Spanish", {"acrashspanish"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 4 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("crash" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        CrashSystem:toggle_loop("Auto Crash Portuguese", {"acrashportuguese"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 5 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("crash" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        CrashSystem:toggle_loop("Auto Crash Polish", {"acrashpolish"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 6 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("crash" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        CrashSystem:toggle_loop("Auto Crash Russian", {"acrashrussian"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 7 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("crash" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        CrashSystem:toggle_loop("Auto Crash Korean", {"acrashkorean"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 8 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("crash" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        CrashSystem:toggle_loop("Auto Crash Chinese (Taiwan)", {"acrashtaiwan"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 9 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("crash" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        CrashSystem:toggle_loop("Auto Crash Japanese", {"acrashjapan"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 10 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("crash" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        CrashSystem:toggle_loop("Auto Crash Mexicans", {"acrashmexico"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 11 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("crash" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+        CrashSystem:toggle_loop("Auto Crash Chinese (Mainland)", {"acrashchina"}, "", function()
+            for players.list(false, false, true) as pid do
+                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                util.yield(10)
+                local languageIndex = players.get_language(pid)
+                    if languageIndex == 12 then
+                        util.yield(15)
+                        if not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            menu.trigger_commands("crash" .. players.get_name(pid))
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
+                    end
+                end 
+            end, function()
+        end)
+
+    ----======================================----
+    ---                Others
+    ---      The Useless Part of scripts
+    ----======================================----
+
+        root:action("Disclaimer", {}, "", function()
+            util.toast(CheckSystem.."\n\n".."DISCLAIMER: You are not allowed to block the session or kick for multiple reasons: this is ethical and not discrimination towards against nationalities or languages.\n\nYou will take your own responsibility to use the Lua Scripts and break session.")
+        end)
+
+        root:divider("Credits")
+        root:readonly("StealthyAD")
+        root:hyperlink("GitHub Page", "https://github.com/StealthyAD/CheckSystem")
+
+    ----======================================----
+    ---             Player Parts
+    ---      The Useful Part of scripts
+    ----======================================----
+
+        players.on_join(function(pid)
+            local PRoot = menu.player_root(pid)
+            local PlayerName = players.get_name(pid)
+            PRoot:divider("CheckSystem "..VRS)
+            PRoot:action("Detection Language", {"language"}, "", function()
+                if CheckSession() then
+                    local languageList = {"English/or non-recognized language", "French", "German", "Italian", "Spanish", "Portuguese/Brazilian", "Polish", "Russian", "Korean", "Chinese (Taiwan)", "Japanese", "Spanish (Mexican)", "Chinese (Mainland China)"}
+                    local languageIndex = players.get_language(pid)
+                    if languageIndex >= 0 and languageIndex <= 12 then
+                        util.toast(PlayerName .. " is " .. languageList[languageIndex + 1]..".")
+                    end
+                end
+            end)
+        end)
+
+        players.dispatch_on_join()
+        players.on_leave(function()end)
+
+    ----======================================----
+    ---             Update Parts
+    ---      The Useful Part of scripts
+    ----======================================----
+
+        local status, auto_updater = pcall(require, "auto-updater")
+        if not status then
+            local auto_update_complete = nil FreedomNotify("Installing auto-updater...", TOAST_ALL)
+            async_http.init("raw.githubusercontent.com", "/hexarobi/stand-lua-auto-updater/main/auto-updater.lua",
+                function(result, headers, status_code)
+                    local function parse_auto_update_result(result, headers, status_code)
+                        local error_prefix = "Error downloading auto-updater: "
+                        if status_code ~= 200 then FreedomNotify(error_prefix..status_code, TOAST_ALL) return false end
+                        if not result or result == "" then FreedomNotify(error_prefix.."Found empty file.", TOAST_ALL) return false end
+                        filesystem.mkdir(filesystem.scripts_dir() .. "lib")
+                        local file = io.open(filesystem.scripts_dir() .. "lib\\auto-updater.lua", "wb")
+                        if file == nil then FreedomNotify(error_prefix.."Could not open file for writing.", TOAST_ALL) return false end
+                        file:write(result) file:close() FreedomNotify("Successfully installed auto-updater lib", TOAST_ALL) return true
+                    end
+                    auto_update_complete = parse_auto_update_result(result, headers, status_code)
+                end, function() FreedomNotify("Error downloading auto-updater lib. Update failed to download.", TOAST_ALL) end)
+            async_http.dispatch() local i = 1 while (auto_update_complete == nil and i < 40) do util.yield(250) i = i + 1 end
+            if auto_update_complete == nil then error("Error downloading auto-updater lib. HTTP Request timeout") end
+            auto_updater = require("auto-updater")
+        end
+        if auto_updater == true then error("Invalid auto-updater lib. Please delete your Stand/Lua Scripts/lib/auto-updater.lua and try again") end
+
+        local default_check_interval = 604800
+        local auto_update_config = {
+            source_url="https://raw.githubusercontent.com/StealthyAD/FreedomScript/main/CheckSystem.pluto",
+            script_relpath=SCRIPT_RELPATH,
+            switch_to_branch=selected_branch,
+            verify_file_begins_with="--",
+            check_interval=86400,
+            silent_updates=true,
+        }
+
+        auto_updater.run_auto_update(auto_update_config)
