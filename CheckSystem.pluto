@@ -551,7 +551,7 @@
                     local languageList = {"English/or non-recognized language", "French", "German", "Italian", "Spanish", "Portuguese/Brazilian", "Polish", "Russian", "Korean", "Chinese (Taiwan)", "Japanese", "Spanish (Mexican)", "Chinese (Mainland China)"}
                     local languageIndex = players.get_language(pid)
                     if languageIndex >= 0 and languageIndex <= 12 then
-                        util.toast(PlayerName .. " is " .. languageList[languageIndex + 1]..".")
+                        util.toast(CheckSystem.."\n"..PlayerName .. " is " .. languageList[languageIndex + 1]..".")
                     end
                 end
             end)
