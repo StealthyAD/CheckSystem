@@ -32,6 +32,7 @@
     local CrashSystem = root:list("Crash Options")
 
     CheckSession =  function() return util.is_session_started() and not util.is_session_transition_active() end
+    CheckNotify = function(str) if NotifMode == 2 then util.show_corner_help(CheckSystem.."~s~~n~"..str ) else util.toast(CheckSystem.."\n"..str) end end
 
     local kick_time = 0
 
@@ -87,7 +88,7 @@
                 local languageIndex = players.get_language(pid)
                 if languageIndex == 1 then
                     if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(CheckSystem.."\n"..players.get_name(pid).. " is French")
+                        util.toast(players.get_name(pid).. " is French")
                         frenchPlayerFound = true
                         repeat
                             util.yield()
@@ -96,7 +97,7 @@
                 end
             end
             if not frenchPlayerFound then 
-                util.toast(CheckSystem.."\n".."We can't find French in the Session")
+                util.toast("We can't find French in the Session")
             end
         end)
         
@@ -108,7 +109,7 @@
                 local languageIndex = players.get_language(pid)
                 if languageIndex == 2 then
                     if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(CheckSystem.."\n"..players.get_name(pid).. " is German")
+                        util.toast(players.get_name(pid).. " is German")
                         germanPlayerFound = true
                         repeat
                             util.yield()
@@ -117,7 +118,7 @@
                 end
             end
             if not germanPlayerFound then 
-                util.toast(CheckSystem.."\n".."We can't find German in the Session")
+                util.toast("We can't find German in the Session")
             end
         end)
 
@@ -129,7 +130,7 @@
                 local languageIndex = players.get_language(pid)
                 if languageIndex == 3 then
                     if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(CheckSystem.."\n"..players.get_name(pid).. " is Italian")
+                        util.toast(players.get_name(pid).. " is Italian")
                         italianPlayerFound = true
                         repeat
                             util.yield()
@@ -138,7 +139,7 @@
                 end
             end
             if not italianPlayerFound then 
-                util.toast(CheckSystem.."\n".."We can't find Italian in the Session")
+                util.toast("We can't find Italian in the Session")
             end
         end)
 
@@ -150,7 +151,7 @@
                 local languageIndex = players.get_language(pid)
                 if languageIndex == 4 then
                     if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(CheckSystem.."\n"..players.get_name(pid).. " is Spanish")
+                        util.toast(players.get_name(pid).. " is Spanish")
                         spanishPlayerFound = true
                         repeat
                             util.yield()
@@ -159,7 +160,7 @@
                 end
             end
             if not spanishPlayerFound then 
-                util.toast(CheckSystem.."\n".."We can't find Spanish in the Session")
+                util.toast("We can't find Spanish in the Session")
             end
         end)
 
@@ -171,7 +172,7 @@
                 local languageIndex = players.get_language(pid)
                 if languageIndex == 5 then
                     if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(CheckSystem.."\n"..players.get_name(pid).. " is Portuguese")
+                        util.toast(players.get_name(pid).. " is Portuguese")
                         portuguesePlayerFound = true
                         repeat
                             util.yield()
@@ -180,7 +181,7 @@
                 end
             end
             if not portuguesePlayerFound then 
-                util.toast(CheckSystem.."\n".."We can't find Portuguese in the Session")
+                util.toast("We can't find Portuguese in the Session")
             end
         end)
 
@@ -192,7 +193,7 @@
                 local languageIndex = players.get_language(pid)
                 if languageIndex == 6 then
                     if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(CheckSystem.."\n"..players.get_name(pid).. " is Polish")
+                        util.toast(players.get_name(pid).. " is Polish")
                         polishPlayerFound = true
                         repeat
                             util.yield()
@@ -201,7 +202,7 @@
                 end
             end
             if not polishPlayerFound then 
-                util.toast(CheckSystem.."\n".."We can't find Polish in the Session")
+                util.toast("We can't find Polish in the Session")
             end
         end)
 
@@ -213,7 +214,7 @@
                 local languageIndex = players.get_language(pid)
                 if languageIndex == 7 then
                     if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(CheckSystem.."\n"..players.get_name(pid).. " is Russian")
+                        util.toast(players.get_name(pid).. " is Russian")
                         ruskiPlayerFound = true
                         repeat
                             util.yield()
@@ -222,7 +223,7 @@
                 end
             end
             if not ruskiPlayerFound then 
-                util.toast(CheckSystem.."\n".."We can't find Russian in the Session")
+                util.toast("We can't find Russian in the Session")
             end
         end)
 
@@ -234,7 +235,7 @@
                 local languageIndex = players.get_language(pid)
                 if languageIndex == 8 then
                     if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(CheckSystem.."\n"..players.get_name(pid).. " is Korean")
+                        util.toast(players.get_name(pid).. " is Korean")
                         koreanPlayerFound = true
                         repeat
                             util.yield()
@@ -243,7 +244,7 @@
                 end
             end
             if not koreanPlayerFound then 
-                util.toast(CheckSystem.."\n".."We can't find Korean in the Session")
+                util.toast("We can't find Korean in the Session")
             end
         end)
 
@@ -255,7 +256,7 @@
                 local languageIndex = players.get_language(pid)
                 if languageIndex == 9 then
                     if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(CheckSystem.."\n"..players.get_name(pid).. " is Chinese (Taiwan)")
+                        util.toast(players.get_name(pid).. " is Chinese (Taiwan)")
                         taiwanPlayerFound = true
                         repeat
                             util.yield()
@@ -264,7 +265,7 @@
                 end
             end
             if not taiwanPlayerFound then 
-                util.toast(CheckSystem.."\n".."We can't find Chinese (Taiwan) in the Session")
+                util.toast("We can't find Chinese (Taiwan) in the Session")
             end
         end)
 
@@ -276,7 +277,7 @@
                 local languageIndex = players.get_language(pid)
                 if languageIndex == 10 then
                     if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(CheckSystem.."\n"..players.get_name(pid).. " is Japanese")
+                        util.toast(players.get_name(pid).. " is Japanese")
                         japanesePlayerFound = true
                         repeat
                             util.yield()
@@ -285,7 +286,7 @@
                 end
             end
             if not japanesePlayerFound then 
-                util.toast(CheckSystem.."\n".."We can't find Japanese in the Session")
+                util.toast("We can't find Japanese in the Session")
             end
         end)
 
@@ -297,7 +298,7 @@
                 local languageIndex = players.get_language(pid)
                 if languageIndex == 11 then
                     if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(CheckSystem.."\n"..players.get_name(pid).. " is Spanish (Mexico)")
+                        util.toast(players.get_name(pid).. " is Spanish (Mexico)")
                         mexicoPlayerFound = true
                         repeat
                             util.yield()
@@ -306,7 +307,7 @@
                 end
             end
             if not mexicoPlayerFound then 
-                util.toast(CheckSystem.."\n".."We can't find Spanish (Mexico) in the Session")
+                util.toast("We can't find Spanish (Mexico) in the Session")
             end
         end)
 
@@ -318,7 +319,7 @@
                 local languageIndex = players.get_language(pid)
                 if languageIndex == 12 then
                     if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(CheckSystem.."\n"..players.get_name(pid).. " is Chinese")
+                        util.toast(players.get_name(pid).. " is Chinese")
                         chinaPlayerFound = true
                         repeat
                             util.yield()
@@ -327,7 +328,7 @@
                 end
             end
             if not chinaPlayerFound then 
-                util.toast(CheckSystem.."\n".."We can't find Chinese in the Session")
+                util.toast("We can't find Chinese in the Session")
             end
         end)
 
@@ -829,17 +830,22 @@
     ----======================================----
 
         root:action("Disclaimer", {}, "", function()
-            util.toast(CheckSystem.."\n\n".."DISCLAIMER: We are clarify that creating or using a Lua script or any other programming code to discriminate against individuals based on their nationalities or ethnicities, including kicking/crash/detect individuals of different nationalities, is unethical and against the principles of inclusivity and fairness.\n\nDiscrimination based on nationality, race, or any other protected characteristic is unacceptable and goes against fundamental human rights. \n\nIt is important to promote inclusivity, diversity, and respect for all individuals, regardless of their nationalities or ethnicities.")
+            CheckNotify("\n".."DISCLAIMER: We are clarify that creating or using a Lua script or any other programming code to discriminate against individuals based on their nationalities or ethnicities, including kicking/crash/detect individuals of different nationalities, is unethical and against the principles of inclusivity and fairness.\n\nDiscrimination based on nationality, race, or any other protected characteristic is unacceptable and goes against fundamental human rights. \n\nIt is important to promote inclusivity, diversity, and respect for all individuals, regardless of their nationalities or ethnicities.")
         end)
 
-        root:divider("Credits")
+        root:divider("Credits & Settings")
         root:readonly("StealthyAD")
         root:hyperlink("GitHub Page", "https://github.com/StealthyAD/CheckSystem")
         root:action("Check for Updates", {}, "The script will automatically check for updates at most daily, but you can manually check using this option anytime.", function()
         auto_update_config.check_interval = 0
             if auto_updater.run_auto_update(auto_update_config) then
-                util.toast(CheckSystem.."\n".."No updates found.")
+                CheckNotify("No updates found.")
             end
+        end)
+
+        NotifMode = "Stand"
+        root:list_select("Notify Mode", {}, "", {"Stand", "Help Message"}, 1, function(selected_mode)
+            NotifMode = selected_mode
         end)
     
         root:action("Clean Reinstall", {}, "Force an update to the latest version, regardless of current version.", function()
@@ -861,7 +867,7 @@
                     local languageList = {"English/or non-recognized language", "French", "German", "Italian", "Spanish", "Portuguese/Brazilian", "Polish", "Russian", "Korean", "Chinese (Taiwan)", "Japanese", "Spanish (Mexican)", "Chinese (Mainland China)"}
                     local languageIndex = players.get_language(pid)
                     if languageIndex >= 0 and languageIndex <= 12 then
-                        util.toast(CheckSystem.."\n"..PlayerName .. " is " .. languageList[languageIndex + 1]..".")
+                        util.toast(PlayerName .. " is " .. languageList[languageIndex + 1]..".")
                     end
                 end
             end)
