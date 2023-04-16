@@ -836,16 +836,17 @@
         root:divider("Credits & Settings")
         root:readonly("StealthyAD")
         root:hyperlink("GitHub Page", "https://github.com/StealthyAD/CheckSystem")
+        
+        NotifMode = "Stand"
+        root:list_select("Notify Mode", {}, "", {"Stand", "Help Message"}, 1, function(selected_mode)
+            NotifMode = selected_mode
+        end)
+
         root:action("Check for Updates", {}, "The script will automatically check for updates at most daily, but you can manually check using this option anytime.", function()
         auto_update_config.check_interval = 0
             if auto_updater.run_auto_update(auto_update_config) then
                 CheckNotify("No updates found.")
             end
-        end)
-
-        NotifMode = "Stand"
-        root:list_select("Notify Mode", {}, "", {"Stand", "Help Message"}, 1, function(selected_mode)
-            NotifMode = selected_mode
         end)
     
         root:action("Clean Reinstall", {}, "Force an update to the latest version, regardless of current version.", function()
