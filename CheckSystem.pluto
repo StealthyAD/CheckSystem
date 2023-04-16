@@ -829,7 +829,7 @@
     ----======================================----
 
         root:action("Disclaimer", {}, "", function()
-            util.toast(CheckSystem.."\n\n".."DISCLAIMER: You are not allowed to block the session or kick for multiple reasons: this is ethical and not discrimination towards against nationalities or languages.\n\nYou will take your own responsibility to use the Lua Scripts and break session.")
+            util.toast(CheckSystem.."\n\n".."DISCLAIMER: We are clarify that creating or using a Lua script or any other programming code to discriminate against individuals based on their nationality or ethnicity, including kicking/crash/detect individuals of different nationality, is unethical and against the principles of inclusivity and fairness.\n\nDiscrimination based on nationality, race, or any other protected characteristic is unacceptable and goes against fundamental human rights. \n\nIt is important to promote inclusivity, diversity, and respect for all individuals, regardless of their nationality or ethnicity.")
         end)
 
         root:divider("Credits")
