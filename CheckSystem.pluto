@@ -22,7 +22,7 @@
     util.keep_running()
     util.require_natives(1663599433)
 
-    local VRS = "0.3"
+    local VRS = "0.4"
     local CheckSystem = "> CheckSystem "..VRS
     local root = menu.my_root()
 
@@ -76,753 +76,99 @@
         auto_updater.run_auto_update(auto_update_config)
 
     ----======================================----
-    ---             Kick Options
-    ---      Kick pests until you're safe
+    ---       Detection/Kick/Crash Options
+    ---      Detect pests until you're safe
     ----======================================----
 
-        DetectSystem:action("Detect French", {"adetectfrench"}, "To be precise for Locations:\n\n-Metropolitan France\n-Overseas France (includes La Réunion, Martinique, Guadeloupe, etc...)\n-Belgium\n-Switzerland\n-African Countries\n-Canada (Quebec)", function()
-            local frenchPlayerFound = false
-            for pid in players.list(false, true, true) do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                local languageIndex = players.get_language(pid)
-                if languageIndex == 1 then
-                    if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(players.get_name(pid).. " is French")
-                        frenchPlayerFound = true
-                        repeat
-                            util.yield()
-                        until pid ~= nil
+        local languages = {
+            ["English"] = {0, {"United States", "United Kingdom", "Australia", "Ireland", "Canada", "India", "New Zealand", "Commonwealth Countries", "Baltic Countries (Lithuania, Estonia, Latvia)", "Nordic Countries (Denmark, Norway, Sweden, Finland, Iceland)", "And every countries not listed."}},
+            ["French"] = {1, {"Metropolitan France", "Overseas France (includes La Réunion, Martinique, Guadeloupe, etc...)", "Belgium", "Switzerland", "African Countries", "Canada (Quebec)"}},
+            ["German"] = {2, {"Germany", "Austria", "Switzerland", "Belgium", "Liechtenstein"}},
+            ["Italian"] = {3, {"Italy", "San Marino", "Switzerland", "Vatican City"}},
+            ["Spanish"] = {4, {"Spain", "Overseas Spain", "American Countries (Argentina, Cuba, Colombia, Peru, Panama, Paraguay, etc...)", "African Countries"}},
+            ["Portuguese"] = {5, {"Portugal", "Brazil", "Angola", "Cabo Verde", "Timor Leste", "Equatorial Guinea", "Mozambique", "São Tomé and Príncipe", "Macau (China Mainland)"}},
+            ["Polish"] = {6, {"Poland", "Belarus"}},
+            ["Russian"] = {7, {"Russian Federation", "Ukraine", "Belarus", "Kazakhstan", "Georgia", "Armenia", "Mongolia", "Tajikistan", "Azerbaijan", "Moldova (Transnistria)", "Turkmenistan", "Uzbekistan", "Kyrgyzstan"}},
+            ["Korean"] = {8, {"South Korea", "North Korea"}},
+            ["Chinese Traditional"] = {9, {"Taiwan Island"}},
+            ["Japanese"] = {10, {"Japan"}},
+            ["Mexican"] = {11, {"Mexico"}},
+            ["Chinese Simplified"] = {12, {"China Mainland", "Taiwan Island", "Thailand (minority)", "Hong Kong", "Macau", "Singapore"}}
+        }
+ 
+        local sorted_languages = {}
+
+        for language, data in pairs(languages) do
+            table.insert(sorted_languages, {language, data})
+        end
+
+        table.sort(sorted_languages, function(a, b) return a[2][1] < b[2][1] end)
+
+        for i, language_data in ipairs(sorted_languages) do
+            local language = language_data[1]
+            local data = language_data[2]
+            
+            DetectSystem:action("Detect " .. language, {"adetect" .. string.lower(language)}, "To be precise for Locations:\n\n-" .. table.concat(data[2], "\n-"), function()
+                local languageFound = false 
+                for pid in players.list(false, true, true) do
+                    local languageIndex = players.get_language(pid)
+                    if languageIndex == data[1] then
+                        if players.get_name(pid) ~= "UndiscoveredPlayer" then
+                            CheckNotify(players.get_name(pid).. " is " .. language)
+                            languageFound = true
+                            repeat
+                                util.yield()
+                            until pid ~= nil
+                        end
                     end
                 end
-            end
-            if not frenchPlayerFound then 
-                util.toast("We can't find French in the Session")
-            end
-        end)
-        
-        DetectSystem:action("Detect German", {"adetectgerman"}, "To be precise for Locations:\n\n-Germany\n-Austria\n-Switzerland\n-Belgium\n-Liechtenstein", function()
-            local germanPlayerFound = false 
-            for pid in players.list(false, true, true) do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                local languageIndex = players.get_language(pid)
-                if languageIndex == 2 then
-                    if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(players.get_name(pid).. " is German")
-                        germanPlayerFound = true
-                        repeat
-                            util.yield()
-                        until pid ~= nil
-                    end
+                if not languageFound then 
+                    CheckNotify("We can't find " .. language .. " in the Session")
                 end
-            end
-            if not germanPlayerFound then 
-                util.toast("We can't find German in the Session")
-            end
-        end)
+            end)
 
-        DetectSystem:action("Detect Italian", {"adetectitalian"}, "To be precise for Locations:\n\n-Italy\n-San Marino\n-Switzerland\n-Vatican City", function()
-            local italianPlayerFound = false 
-            for pid in players.list(false, true, true) do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                local languageIndex = players.get_language(pid)
-                if languageIndex == 3 then
-                    if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(players.get_name(pid).. " is Italian")
-                        italianPlayerFound = true
-                        repeat
-                            util.yield()
-                        until pid ~= nil
-                    end
-                end
-            end
-            if not italianPlayerFound then 
-                util.toast("We can't find Italian in the Session")
-            end
-        end)
-
-        DetectSystem:action("Detect Spanish", {"adetectspanish"}, "To be precise for Locations:\n\n-Spain\n-Overseas Spain\n-American Countries (Argentina, Cuba, Colombia, Peru, Panama, Paraguay, etc...)\n-African Countries", function()
-            local spanishPlayerFound = false 
-            for pid in players.list(false, true, true) do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                local languageIndex = players.get_language(pid)
-                if languageIndex == 4 then
-                    if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(players.get_name(pid).. " is Spanish")
-                        spanishPlayerFound = true
-                        repeat
-                            util.yield()
-                        until pid ~= nil
-                    end
-                end
-            end
-            if not spanishPlayerFound then 
-                util.toast("We can't find Spanish in the Session")
-            end
-        end)
-
-        DetectSystem:action("Detect Portuguese", {"adetectportuguese"}, "To be precise for Locations:\n\n-Portugal\n-Brazil\n-Angola\n-Cabo Verde\n-Timor Leste\n-Equatorial Guinea\n-Mozambique\n-São Tomé and Príncipe\n-Macau (China Mainland)", function()
-            local portuguesePlayerFound = false 
-            for pid in players.list(false, true, true) do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                local languageIndex = players.get_language(pid)
-                if languageIndex == 5 then
-                    if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(players.get_name(pid).. " is Portuguese")
-                        portuguesePlayerFound = true
-                        repeat
-                            util.yield()
-                        until pid ~= nil
-                    end
-                end
-            end
-            if not portuguesePlayerFound then 
-                util.toast("We can't find Portuguese in the Session")
-            end
-        end)
-
-        DetectSystem:action("Detect Polish", {"adetectpolish"}, "To be precise for Locations:\n\n-Poland\n-Belarus", function()
-            local polishPlayerFound = false 
-            for pid in players.list(false, true, true) do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                local languageIndex = players.get_language(pid)
-                if languageIndex == 6 then
-                    if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(players.get_name(pid).. " is Polish")
-                        polishPlayerFound = true
-                        repeat
-                            util.yield()
-                        until pid ~= nil
-                    end
-                end
-            end
-            if not polishPlayerFound then 
-                util.toast("We can't find Polish in the Session")
-            end
-        end)
-
-        DetectSystem:action("Detect Russian", {"adetectrussian"}, "To be precise for Locations:\n\n-Russian Federation\n-Ukraine\n-Belarus\n-Kazakhstan\n-Georgia\n-Armenia\n-Mongolia\n-Tajikistan\n-Azerbaijan\n-Moldova (Transnistria)\n-Turkmenistan\n-Uzbekistan\n-Kyrgyzstan", function()
-            local ruskiPlayerFound = false 
-            for pid in players.list(false, true, true) do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                local languageIndex = players.get_language(pid)
-                if languageIndex == 7 then
-                    if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(players.get_name(pid).. " is Russian")
-                        ruskiPlayerFound = true
-                        repeat
-                            util.yield()
-                        until pid ~= nil
-                    end
-                end
-            end
-            if not ruskiPlayerFound then 
-                util.toast("We can't find Russian in the Session")
-            end
-        end)
-
-        DetectSystem:action("Detect Korean", {"adetectkorean"}, "To be precise for Locations:\n\n-South Korea\n-North Korea", function()
-            local koreanPlayerFound = false 
-            for pid in players.list(false, true, true) do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                local languageIndex = players.get_language(pid)
-                if languageIndex == 8 then
-                    if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(players.get_name(pid).. " is Korean")
-                        koreanPlayerFound = true
-                        repeat
-                            util.yield()
-                        until pid ~= nil
-                    end
-                end
-            end
-            if not koreanPlayerFound then 
-                util.toast("We can't find Korean in the Session")
-            end
-        end)
-
-        DetectSystem:action("Detect Chinese (Taiwan)", {"adetecttaiwan"}, "To be precise for Locations:\n\n-Taiwan Island", function()
-            local taiwanPlayerFound = false 
-            for pid in players.list(false, true, true) do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                local languageIndex = players.get_language(pid)
-                if languageIndex == 9 then
-                    if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(players.get_name(pid).. " is Chinese (Taiwan)")
-                        taiwanPlayerFound = true
-                        repeat
-                            util.yield()
-                        until pid ~= nil
-                    end
-                end
-            end
-            if not taiwanPlayerFound then 
-                util.toast("We can't find Chinese (Taiwan) in the Session")
-            end
-        end)
-
-        DetectSystem:action("Detect Japanese", {"adetectjapan"}, "To be precise for Locations:\n\n-Japan", function()
-            local japanesePlayerFound = false 
-            for pid in players.list(false, true, true) do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                local languageIndex = players.get_language(pid)
-                if languageIndex == 10 then
-                    if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(players.get_name(pid).. " is Japanese")
-                        japanesePlayerFound = true
-                        repeat
-                            util.yield()
-                        until pid ~= nil
-                    end
-                end
-            end
-            if not japanesePlayerFound then 
-                util.toast("We can't find Japanese in the Session")
-            end
-        end)
-
-        DetectSystem:action("Detect Mexican", {"adetectmexico"}, "To be precise for Locations:\n\n-Mexico", function()
-            local mexicoPlayerFound = false 
-            for pid in players.list(false, true, true) do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                local languageIndex = players.get_language(pid)
-                if languageIndex == 11 then
-                    if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(players.get_name(pid).. " is Spanish (Mexico)")
-                        mexicoPlayerFound = true
-                        repeat
-                            util.yield()
-                        until pid ~= nil
-                    end
-                end
-            end
-            if not mexicoPlayerFound then 
-                util.toast("We can't find Spanish (Mexico) in the Session")
-            end
-        end)
-
-        DetectSystem:action("Detect Chinese", {"adetectchina"}, "To be precise for Locations:\n\n-China Mainland\n-Taiwan Island\n-Thailand (minority)\n-Hong Kong\n-Macau\n-Singapore", function()
-            local chinaPlayerFound = false 
-            for pid in players.list(false, true, true) do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                local languageIndex = players.get_language(pid)
-                if languageIndex == 12 then
-                    if players.get_name(pid) ~= "UndiscoveredPlayer" then
-                        util.toast(players.get_name(pid).. " is Chinese")
-                        chinaPlayerFound = true
-                        repeat
-                            util.yield()
-                        until pid ~= nil
-                    end
-                end
-            end
-            if not chinaPlayerFound then 
-                util.toast("We can't find Chinese in the Session")
-            end
-        end)
-
-    ----======================================----
-    ---             Kick Options
-    ---      Kick pests until you're safe
-    ----======================================----
-
-        KickSystem:toggle_loop("Auto Kick French", {"akickfrench"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                kick_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 1 then
-                        util.yield(15)
-                        if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("breakup" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            kick_time = 0
+            local kick_time = 0
+            KickSystem:toggle_loop("Auto Kick " .. language, {"akick" .. string.lower(language)}, "To be precise for Locations:\n\n-" .. table.concat(data[2], "\n-"), function()
+                for players.list(false, false, true) as pid do
+                    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                    util.yield(10)
+                    kick_time += 1
+                    local languageIndex = players.get_language(pid)
+                        if languageIndex == data[1] then
+                            util.yield(15)
+                            if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                                menu.trigger_commands("breakup" .. players.get_name(pid))
+                                repeat
+                                    util.yield()
+                                until pid ~= nil
+                                kick_time = 0
+                            end
                         end
-                    end
-                end 
-            end, function()
-        end)
+                    end 
+                end, function()
+            end)
 
-        KickSystem:toggle_loop("Auto Kick German", {"akickgerman"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                kick_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 2 then
-                        util.yield(15)
-                        if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("breakup" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            kick_time = 0
+            local crash_time = 0
+            CrashSystem:toggle_loop("Auto Crash " .. language, {"acrash" .. string.lower(language)}, "To be precise for Locations:\n\n-" .. table.concat(data[2], "\n-"), function()
+                for players.list(false, false, true) as pid do
+                    local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
+                    util.yield(10)
+                    crash_time += 1
+                    local languageIndex = players.get_language(pid)
+                        if languageIndex == data[1] then
+                            util.yield(15)
+                            if crash_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
+                                menu.trigger_commands("crash" .. players.get_name(pid))
+                                repeat
+                                    util.yield()
+                                until pid ~= nil
+                                crash_time = 0
+                            end
                         end
-                    end
-                end 
-            end, function()
-        end)
-
-        KickSystem:toggle_loop("Auto Kick Italian", {"akickitalian"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                kick_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 3 then
-                        util.yield(15)
-                        if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("breakup" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            kick_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        KickSystem:toggle_loop("Auto Kick Spanish", {"akickspanish"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                kick_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 4 then
-                        util.yield(15)
-                        if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("breakup" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            kick_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        KickSystem:toggle_loop("Auto Kick Portuguese", {"akickportuguese"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                kick_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 5 then
-                        util.yield(15)
-                        if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("breakup" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            kick_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        KickSystem:toggle_loop("Auto Kick Polish", {"akickpolish"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                kick_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 6 then
-                        util.yield(15)
-                        if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("breakup" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            kick_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        KickSystem:toggle_loop("Auto Kick Russian", {"akickrussian"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                kick_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 7 then
-                        util.yield(15)
-                        if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("breakup" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            kick_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        KickSystem:toggle_loop("Auto Kick Korean", {"akickkorean"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                kick_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 8 then
-                        util.yield(15)
-                        if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("breakup" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            kick_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        KickSystem:toggle_loop("Auto Kick Chinese (Taiwan)", {"akicktaiwan"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                kick_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 9 then
-                        util.yield(15)
-                        if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("breakup" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            kick_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        KickSystem:toggle_loop("Auto Kick Japanese", {"akickjapan"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                kick_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 10 then
-                        util.yield(15)
-                        if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("breakup" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            kick_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        KickSystem:toggle_loop("Auto Kick Mexicans", {"akickmexico"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                kick_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 11 then
-                        util.yield(15)
-                        if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("breakup" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            kick_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        KickSystem:toggle_loop("Auto Kick Chinese (Mainland)", {"akickchina"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                kick_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 12 then
-                        util.yield(15)
-                        if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("breakup" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            kick_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-    ----======================================----
-    ---             Crash Options
-    ---      Crash pests until you're safe
-    ----======================================----
-
-        local crash_time = 0
-
-        CrashSystem:toggle_loop("Auto Crash French", {"acrashfrench"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                crash_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 1 then
-                        util.yield(15)
-                        if crash_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("crash" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            crash_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        CrashSystem:toggle_loop("Auto Crash German", {"acrashgerman"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                crash_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 2 then
-                        util.yield(15)
-                        if crash_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("crash" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            crash_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        CrashSystem:toggle_loop("Auto Crash Italian", {"acrashitalian"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                crash_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 3 then
-                        util.yield(15)
-                        if crash_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("crash" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            crash_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        CrashSystem:toggle_loop("Auto Crash Spanish", {"acrashspanish"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                crash_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 4 then
-                        util.yield(15)
-                        if crash_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("crash" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            crash_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        CrashSystem:toggle_loop("Auto Crash Portuguese", {"acrashportuguese"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                crash_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 5 then
-                        util.yield(15)
-                        if crash_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("crash" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            crash_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        CrashSystem:toggle_loop("Auto Crash Polish", {"acrashpolish"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                crash_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 6 then
-                        util.yield(15)
-                        if crash_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("crash" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            crash_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        CrashSystem:toggle_loop("Auto Crash Russian", {"acrashrussian"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                crash_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 7 then
-                        util.yield(15)
-                        if crash_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("crash" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            crash_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        CrashSystem:toggle_loop("Auto Crash Korean", {"acrashkorean"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                crash_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 8 then
-                        util.yield(15)
-                        if crash_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("crash" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            crash_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        CrashSystem:toggle_loop("Auto Crash Chinese (Taiwan)", {"acrashtaiwan"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                crash_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 9 then
-                        util.yield(15)
-                        if crash_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("crash" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            crash_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        CrashSystem:toggle_loop("Auto Crash Japanese", {"acrashjapan"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                crash_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 10 then
-                        util.yield(15)
-                        if crash_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("crash" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            crash_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        CrashSystem:toggle_loop("Auto Crash Mexicans", {"acrashmexico"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                crash_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 11 then
-                        util.yield(15)
-                        if crash_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("crash" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            crash_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
-
-        CrashSystem:toggle_loop("Auto Crash Chinese (Mainland)", {"acrashchina"}, "", function()
-            for players.list(false, false, true) as pid do
-                local ped = PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(pid)
-                util.yield(10)
-                crash_time += 1
-                local languageIndex = players.get_language(pid)
-                    if languageIndex == 12 then
-                        util.yield(15)
-                        if crash_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                            menu.trigger_commands("crash" .. players.get_name(pid))
-                            repeat
-                                util.yield()
-                            until pid ~= nil
-                            crash_time = 0
-                        end
-                    end
-                end 
-            end, function()
-        end)
+                    end 
+                end, function()
+            end)
+        end
 
     ----======================================----
     ---                Others
@@ -830,7 +176,13 @@
     ----======================================----
 
         root:action("Disclaimer", {}, "", function()
-            CheckNotify("\n".."DISCLAIMER: We are clarify that creating or using a Lua script or any other programming code to discriminate against individuals based on their nationalities or ethnicities, including kicking/crash/detect individuals of different nationalities, is unethical and against the principles of inclusivity and fairness.\n\nDiscrimination based on nationality, race, or any other protected characteristic is unacceptable and goes against fundamental human rights. \n\nIt is important to promote inclusivity, diversity, and respect for all individuals, regardless of their nationalities or ethnicities.")
+        async_http.init("raw.githubusercontent.com","/StealthyAD/CheckSystem/main/Disclaimer", function(content)
+            if content ~= "404: Not Found" then
+                local Disclaimer = string.gsub(content, "\n$", "")
+                    CheckNotify("\n"..Disclaimer)
+                end
+            end)
+            async_http.dispatch()
         end)
 
         root:divider("Credits & Settings")
@@ -868,7 +220,7 @@
                     local languageList = {"English/or non-recognized language", "French", "German", "Italian", "Spanish", "Portuguese/Brazilian", "Polish", "Russian", "Korean", "Chinese (Taiwan)", "Japanese", "Spanish (Mexican)", "Chinese (Mainland China)"}
                     local languageIndex = players.get_language(pid)
                     if languageIndex >= 0 and languageIndex <= 12 then
-                        util.toast(PlayerName .. " is " .. languageList[languageIndex + 1]..".")
+                        CheckNotify(PlayerName .. " is " .. languageList[languageIndex + 1]..".")
                     end
                 end
             end)
