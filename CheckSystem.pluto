@@ -20,9 +20,8 @@
 ]]--
 
     util.keep_running()
-    util.require_natives(1663599433)
 
-    local VRS = "0.4"
+    local VRS = "0.42"
     local CheckSystem = "> CheckSystem "..VRS
     local root = menu.my_root()
 
@@ -137,7 +136,7 @@
                         if languageIndex == data[1] then
                             util.yield(15)
                             if kick_time >= 3 and not players.get_name(pid) ~= "UndiscoveredPlayer" then
-                                menu.trigger_commands("breakup" .. players.get_name(pid))
+                                menu.trigger_commands("kick" .. players.get_name(pid))
                                 repeat
                                     util.yield()
                                 until pid ~= nil
